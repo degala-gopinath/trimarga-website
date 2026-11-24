@@ -59,7 +59,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="relative overflow-hidden border-t border-white/10 bg-[#0A0A0A] text-white">
+    <footer className="relative overflow-hidden border-t border-white/10 bg-[#0A0907] text-white">
 
       {/* Subtle Background Glow */}
       <div
@@ -96,7 +96,7 @@ export default function Footer() {
 
             <Link
               to="/contact"
-              className="group inline-flex w-fit shrink-0 items-center justify-center gap-3 rounded-lg bg-[#FBAF01] px-7 py-4 text-xs font-extrabold uppercase tracking-wider text-[#0A0A0A] transition-all duration-300 hover:-translate-y-1 hover:bg-white hover:shadow-[0_12px_35px_rgba(251,175,1,0.18)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#FBAF01] motion-reduce:transform-none"
+              className="group inline-flex w-fit shrink-0 items-center justify-center gap-3 rounded-lg btn-primary bg-[#FBAF01] px-7 py-4 text-xs font-extrabold uppercase tracking-wider text-[#0A0907] transition-all duration-300 hover:-translate-y-1 hover:bg-white hover:shadow-[0_12px_35px_rgba(251,175,1,0.18)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#FBAF01] motion-reduce:transform-none"
             >
               Get a Free Consultation
 
@@ -256,7 +256,7 @@ export default function Footer() {
                     >
 
                       {/* Social Logo */}
-                      <div className="flex h-14 w-14 items-center justify-center rounded-full border border-[#FBAF01]/40 bg-[#FBAF01]/10 text-[#FBAF01] transition-all duration-300 group-hover:-translate-y-1 group-hover:border-[#FBAF01] group-hover:bg-[#FBAF01] group-hover:text-[#0A0A0A] motion-reduce:transform-none">
+                      <div className="flex h-14 w-14 items-center justify-center rounded-full border border-[#FBAF01]/40 bg-[#FBAF01]/10 text-[#FBAF01] transition-all duration-300 group-hover:-translate-y-1 group-hover:border-[#FBAF01] group-hover:bg-[#FBAF01] group-hover:text-[#0A0907] motion-reduce:transform-none">
 
                         <Icon className="h-7 w-7" />
 

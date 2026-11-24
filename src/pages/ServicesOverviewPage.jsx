@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, ArrowUpRight, Check } from 'lucide-react';
 import { SERVICES_LIST, PACKAGES, GENERAL_FAQS } from '../data/servicesData';
 import FaqAccordion from '../components/FaqAccordion';
+import ServicePathGroups from '../components/ServicePathGroups';
 
 export default function ServicesOverviewPage() {
   return (
-    <div className="bg-[#0A0A0A] text-white">
+    <div className="text-white">
       {/* Header */}
       <section className="editorial-grid border-b border-white/15 py-20">
         <div className="mx-auto max-w-5xl px-5 sm:px-8">
@@ -22,7 +23,7 @@ export default function ServicesOverviewPage() {
           <div className="mt-8">
             <Link
               to="/contact"
-              className="inline-flex items-center gap-2 bg-[#FBAF01] px-7 py-3.5 text-xs font-extrabold uppercase tracking-[0.14em] text-[#0A0A0A] hover:bg-white transition-colors"
+              className="inline-flex items-center gap-2 btn-primary bg-[#FBAF01] px-7 py-3.5 text-xs font-extrabold uppercase tracking-[0.14em] text-[#0A0907] hover:bg-white"
             >
               <span>Get a Free Consultation</span>
               <ArrowRight className="h-4 w-4" />
@@ -34,39 +35,12 @@ export default function ServicesOverviewPage() {
       {/* All 11 Services in Exact Order */}
       <section className="border-b border-white/15 py-20">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
-          <div className="grid gap-px bg-white/15 border border-white/15 sm:grid-cols-2 lg:grid-cols-3">
-            {SERVICES_LIST.map((service) => (
-              <Link
-                key={service.id}
-                to={`/services/${service.slug}`}
-                className="group flex flex-col justify-between bg-[#0A0A0A] p-7 hover:bg-[#111111] transition-colors"
-              >
-                <div>
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="font-mono font-bold text-[#FBAF01]">{service.num}</span>
-                    <span className="uppercase tracking-wider text-[10px] text-white/45">
-                      {service.category}
-                    </span>
-                  </div>
-                  <h2 className="mt-4 text-lg font-bold text-white group-hover:text-[#FBAF01] transition-colors">
-                    {service.title}
-                  </h2>
-                  <p className="mt-3 text-sm leading-relaxed text-white/75">
-                    {service.shortDesc}
-                  </p>
-                </div>
-                <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-bold uppercase tracking-wider text-white/60 group-hover:text-[#FBAF01]">
-                  <span>View Service Page</span>
-                  <ArrowUpRight className="h-4 w-4" />
-                </div>
-              </Link>
-            ))}
-          </div>
+          <ServicePathGroups headingLevel="h2" cardHeadingLevel="h3" ctaLabel="View service page" />
         </div>
       </section>
 
       {/* Packages Table — Structure Only, Zero Invented Prices */}
-      <section className="border-b border-white/15 py-20 bg-[#111111]">
+      <section className="border-b border-white/15 py-20 bg-[#110F0C]">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
           <div className="max-w-2xl">
             <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#FBAF01]">
@@ -84,7 +58,7 @@ export default function ServicesOverviewPage() {
             {PACKAGES.map((pkg) => (
               <div
                 key={pkg.name}
-                className={`flex flex-col justify-between bg-[#0A0A0A] p-8 ${
+                className={`flex flex-col justify-between bg-[#0A0907] p-8 ${
                   pkg.featured ? 'border-2 border-[#FBAF01]' : 'border border-white/15'
                 }`}
               >
@@ -92,7 +66,7 @@ export default function ServicesOverviewPage() {
                   <div className="flex items-center justify-between">
                     <span className="font-mono text-xs font-bold text-[#FBAF01]">{pkg.tier}</span>
                     {pkg.featured && (
-                      <span className="bg-[#FBAF01] px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-[#0A0A0A]">
+                      <span className="bg-[#FBAF01] px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-[#0A0907]">
                         Most Selected
                       </span>
                     )}
@@ -119,10 +93,10 @@ export default function ServicesOverviewPage() {
 
                 <Link
                   to="/contact"
-                  className={`mt-8 block w-full py-3.5 text-center text-xs font-extrabold uppercase tracking-[0.14em] transition-colors ${
+                  className={`mt-8 block w-full py-3.5 text-center text-xs font-extrabold uppercase tracking-[0.14em] ${
                     pkg.featured
-                      ? 'bg-[#FBAF01] text-[#0A0A0A] hover:bg-white'
-                      : 'border border-white/25 text-white hover:border-[#FBAF01] hover:text-[#FBAF01]'
+                      ? 'btn-primary bg-[#FBAF01] text-[#0A0907]'
+                      : 'btn-ghost border border-white/25 text-white'
                   }`}
                 >
                   Request Quote
@@ -152,7 +126,7 @@ export default function ServicesOverviewPage() {
           <div className="mt-8">
             <Link
               to="/contact"
-              className="inline-flex items-center gap-2 bg-[#FBAF01] px-8 py-4 text-xs font-extrabold uppercase tracking-[0.14em] text-[#0A0A0A] hover:bg-white transition-colors"
+              className="inline-flex items-center gap-2 btn-primary bg-[#FBAF01] px-8 py-4 text-xs font-extrabold uppercase tracking-[0.14em] text-[#0A0907] hover:bg-white"
             >
               <span>Get a Free Consultation</span>
               <ArrowRight className="h-4 w-4" />

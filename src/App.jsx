@@ -17,6 +17,10 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import CreativeCursor from './components/CreativeCursor';
 import RevealOnScroll from './components/RevealOnScroll';
+import Atmosphere from './components/Atmosphere';
+import FloatingContact from './components/FloatingContact';
+import Preloader from './components/Preloader';
+import RouteCurtain from './components/RouteCurtain';
 
 // Lazy Loaded Pages
 const HomePage = lazy(() => import('./pages/HomePage'));
@@ -52,23 +56,35 @@ function ScrollToTop() {
   return null;
 }
 
-// Lightweight Loading Indicator
+// Content-shaped loading skeleton — reads as "the page is arriving",
+// not as "something broke".
 function PageLoader() {
   return (
     <div
-      className="flex min-h-[50vh] items-center justify-center bg-[#0A0A0A]"
+      className="mx-auto max-w-7xl px-5 py-16 sm:px-8"
       role="status"
       aria-label="Loading page"
     >
-      <div className="flex flex-col items-center gap-4">
-
-        <div className="h-10 w-10 animate-spin rounded-full border-2 border-white/15 border-t-[#FBAF01]" />
-
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FBAF01]">
-          Loading
-        </p>
-
+      <div className="space-y-4">
+        <div className="skeleton h-3 w-36" />
+        <div className="skeleton h-10 w-full max-w-3xl" />
+        <div className="skeleton h-10 w-full max-w-xl" />
+        <div className="skeleton h-4 w-full max-w-2xl !bg-[#0D0B09]" />
+        <div className="skeleton h-4 w-full max-w-lg !bg-[#0D0B09]" />
       </div>
+
+      <div className="mt-12 grid gap-px border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-3">
+        {Array.from({ length: 6 }).map((_, index) => (
+          <div key={index} className="space-y-3 bg-[#0A0907] p-7">
+            <div className="skeleton h-3 w-10" />
+            <div className="skeleton h-5 w-3/4" />
+            <div className="skeleton h-3 w-full !bg-[#0D0B09]" />
+            <div className="skeleton h-3 w-5/6 !bg-[#0D0B09]" />
+          </div>
+        ))}
+      </div>
+
+      <span className="sr-only">Loading</span>
     </div>
   );
 }
@@ -80,7 +96,7 @@ function AnimatedPages() {
   return (
     <main
       key={pathname}
-      className="flex-1 page-enter"
+      className="stage flex-1 page-enter"
       id="main-content"
     >
       <Suspense fallback={<PageLoader />}>
@@ -136,7 +152,16 @@ export default function App() {
 
       <ScrollToTop />
 
-      <div className="flex min-h-screen flex-col bg-[#0A0A0A] text-white selection:bg-[#FBAF01] selection:text-[#0A0A0A]">
+      <div className="relative flex min-h-screen flex-col bg-[#0A0907] text-white selection:bg-[#FBAF01] selection:text-[#0A0907]">
+
+        {/* Three paths converge into the mark, then the curtain lifts */}
+        <Preloader />
+
+        {/* The same three panels punctuate every route change */}
+        <RouteCurtain />
+
+        {/* Depth layers: scroll progress, drifting aurora, film grain */}
+        <Atmosphere />
 
         {/* Custom Cursor */}
         <CreativeCursor />
@@ -149,6 +174,9 @@ export default function App() {
 
         {/* Footer */}
         <Footer />
+
+        {/* Persistent WhatsApp / call access */}
+        <FloatingContact />
 
       </div>
 

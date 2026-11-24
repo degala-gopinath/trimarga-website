@@ -5,7 +5,7 @@ import { SITE_CONFIG } from '../data/siteConfig';
 
 export default function AboutPage() {
   return (
-    <div className="bg-[#0A0A0A] text-white">
+    <div className="text-white">
       {/* Header */}
       <section className="editorial-grid border-b border-white/15 py-20">
         <div className="mx-auto max-w-5xl px-5 sm:px-8">
@@ -29,7 +29,7 @@ export default function AboutPage() {
       {/* Mission & Vision */}
       <section className="border-b border-white/15 py-20">
         <div className="mx-auto max-w-5xl px-5 sm:px-8 grid gap-px bg-white/15 border border-white/15 md:grid-cols-2">
-          <div className="bg-[#111111] p-8 sm:p-10">
+          <div className="bg-[#110F0C] p-8 sm:p-10">
             <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-[#FBAF01]">
               Our Mission
             </h2>
@@ -38,7 +38,7 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <div className="bg-[#111111] p-8 sm:p-10">
+          <div className="bg-[#110F0C] p-8 sm:p-10">
             <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-[#FBAF01]">
               Our Vision
             </h2>
@@ -52,16 +52,16 @@ export default function AboutPage() {
       {/* Backed by Triopath & Founder */}
       <section className="border-b border-white/15 py-20">
         <div className="mx-auto max-w-5xl px-5 sm:px-8 space-y-10">
-          <div className="border border-white/15 bg-[#111111] p-8 sm:p-10">
+          <div className="border border-white/15 bg-[#110F0C] p-8 sm:p-10">
             <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#FBAF01]">
               Backed by Triopath
             </span>
             <p className="mt-4 text-base sm:text-lg leading-relaxed text-white/85">
-              Trimarga is the business growth arm of Triopath, which began as a career and talent company - headquartered in India with pan-India operations and an expanding footprint in the USA. We have optimised 500+ resumes, revamped 200+ LinkedIn profiles, delivered 300+ personalised career roadmaps and fulfilled 25+ corporate staffing mandates across technology, healthcare, finance, retail and marketing. Our business services bring the same promise to companies: <strong className="text-[#FBAF01]">Dream. Discover. Decide.</strong> - now applied to your growth.
+              Trimarga is the business growth arm of Triopath, which began as a career and talent company - headquartered in India with pan-India operations and an expanding footprint in the USA. We have optimised 500+ resumes, revamped 200+ LinkedIn profiles, delivered 300+ personalised career roadmaps and fulfilled 25+ corporate staffing mandates across technology, healthcare, finance, retail and marketing. Our business services bring the same promise to companies: <strong className="font-display font-semibold"><span style={{ color: 'var(--path-1)' }}>Dream.</span>{' '}<span style={{ color: 'var(--path-2)' }}>Discover.</span>{' '}<span style={{ color: 'var(--path-3)' }}>Decide.</span></strong> - now applied to your growth.
             </p>
           </div>
 
-          <div className="border-l-4 border-[#FBAF01] border border-white/15 bg-[#111111] p-8 sm:p-10">
+          <div className="border-l-4 border-[#FBAF01] border border-white/15 bg-[#110F0C] p-8 sm:p-10">
             <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#FBAF01]">
               Meet the Founder
             </span>
@@ -104,7 +104,7 @@ export default function AboutPage() {
           <div className="mt-8">
             <Link
               to="/contact"
-              className="inline-flex items-center gap-2 bg-[#FBAF01] px-8 py-4 text-xs font-extrabold uppercase tracking-[0.14em] text-[#0A0A0A] hover:bg-white transition-colors"
+              className="inline-flex items-center gap-2 btn-primary bg-[#FBAF01] px-8 py-4 text-xs font-extrabold uppercase tracking-[0.14em] text-[#0A0907] hover:bg-white"
             >
               <span>Work With Us</span>
               <ArrowRight className="h-4 w-4" />

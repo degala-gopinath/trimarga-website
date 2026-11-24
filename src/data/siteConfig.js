@@ -1,5 +1,10 @@
 // Global site configuration — update links, phone, and social handles in this single file
 export const SITE_CONFIG = {
+  // The one place the live origin is written down. Everything that needs an
+  // absolute URL (canonical tags, OG images, sitemap) must read it from here,
+  // so moving to a custom domain is a one-line change.
+  // No trailing slash.
+  siteUrl: 'https://trimarga-website-y2i2.vercel.app',
   brandName: 'TRIMARGA',
   tagline: 'BUSINESS GROWTH PARTNERS',
   topStrip: 'Websites, Google Profile, Social Media and Ads - everything your business needs to grow online.',

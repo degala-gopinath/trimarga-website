@@ -2,49 +2,122 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ========================================
-   GLOBAL STYLING
-======================================== */
+/* ============================================================
+   1. DESIGN TOKENS
+   One easing curve, two durations, a layered ink scale.
+============================================================ */
+
+:root {
+  /* Ink layers — a warm near-black reads richer than a neutral one */
+  --ink-0: #060503;
+  --ink-1: #0A0907;
+  --ink-2: #110F0C;
+  --ink-3: #181511;
+
+  /* Accent */
+  --acc: #FBAF01;
+  --acc-soft: #FFC73D;
+  --acc-deep: #C98A00;
+  --acc-rgb: 251, 175, 1;
+
+  /* The three paths. Trimarga means "three paths", so the brand's own idea
+     carries the colour system: one hue per route to growth. They are
+     analogous, so the palette stays warm and nothing clashes. */
+  --path-1: #E2651A;
+  --path-1-rgb: 226, 101, 26;
+  --path-2: #FBAF01;
+  --path-2-rgb: 251, 175, 1;
+  --path-3: #FFD166;
+  --path-3-rgb: 255, 209, 102;
+
+  /* Hairlines */
+  --line: rgba(255, 255, 255, .15);
+  --line-soft: rgba(255, 255, 255, .08);
+
+  /* Motion — one curve, two speeds */
+  --ease: cubic-bezier(.16, 1, .3, 1);
+  --ease-soft: cubic-bezier(.4, 0, .2, 1);
+  --ease-pop: cubic-bezier(.34, 1.4, .64, 1);
+  --t-fast: .16s;
+  --t-move: .45s;
+  --t-slow: .9s;
+
+  /* Fluid rhythm — compact on phones, generous on desktop */
+  --section-spacing: clamp(2.5rem, 5.2vw, 4.75rem);
+  --stagger: 70ms;
+}
+
+/* ============================================================
+   2. BASE
+============================================================ */
 
 @layer base {
   html {
     scroll-behavior: smooth;
-    background-color: #0A0A0A;
+    background-color: var(--ink-1);
     color: #FFFFFF;
-    font-family: 'Plus Jakarta Sans', system-ui,
-      -apple-system, sans-serif;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
 
   body {
     margin: 0;
     overflow-x: hidden;
+    background-color: var(--ink-1);
   }
 
   * {
     box-sizing: border-box;
   }
+
+  /* Display type. Clash Display is wide and heavy already, so it needs far
+     less negative tracking than Playfair did, and a little extra word
+     spacing — without it words run together at bold weights. */
+  h1,
+  h2,
+  h3 {
+    letter-spacing: -.008em;
+    word-spacing: .06em;
+  }
+
+  h1 {
+    letter-spacing: -.012em;
+  }
+
+  ::selection {
+    background: var(--acc);
+    color: var(--ink-1);
+  }
 }
 
-/* ========================================
-   GLOBAL PAGE SPACING
-======================================== */
-
-:root {
-  --section-spacing: 40px;
+/* Clash Display reads best at semibold. The pages were written for Playfair
+   with `font-bold`; element+class specificity lets this win without touching
+   every heading. */
+h1.font-serif,
+h2.font-serif,
+h3.font-serif,
+h1.font-display,
+h2.font-display,
+h3.font-display {
+  font-weight: 600;
 }
+
+/* ============================================================
+   3. PAGE RHYTHM
+   Normalises Tailwind's padding scale onto one fluid token.
+============================================================ */
 
 main {
   width: 100%;
   margin: 0;
 }
 
-/* Consistent spacing across page sections */
 main section[class*="py-"] {
   padding-top: var(--section-spacing) !important;
   padding-bottom: var(--section-spacing) !important;
 }
 
-/* Normalize large container padding */
 main section > div[class*="py-20"],
 main section > div[class*="py-24"],
 main section > div[class*="py-28"],
@@ -53,96 +126,341 @@ main section > div[class*="py-32"] {
   padding-bottom: var(--section-spacing) !important;
 }
 
-/* Hero section spacing */
 main section.editorial-grid {
   padding-top: 0 !important;
   padding-bottom: 0 !important;
 }
 
 main section.editorial-grid > div {
-  padding-top: var(--section-spacing) !important;
-  padding-bottom: var(--section-spacing) !important;
+  padding-top: calc(var(--section-spacing) * .85) !important;
+  padding-bottom: calc(var(--section-spacing) * 1.25) !important;
 }
 
-/* Reduce excessive content spacing */
 main .mt-14,
 main .mt-12 {
-  margin-top: 24px;
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
 }
 
 main .mb-10 {
-  margin-bottom: 24px;
+  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
 }
 
-/* ========================================
-   ORIGINAL EDITORIAL GRID BACKGROUND
-======================================== */
+/* ============================================================
+   4. DEPTH LAYER
+   Three cheap layers that turn flat black into lit black.
+============================================================ */
+
+/* 4a. Drifting aurora — sits behind everything, fixed */
+
+.aurora {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  contain: strict;
+}
+
+.aurora span {
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+  filter: blur(110px);
+  will-change: transform;
+}
+
+.aurora span:nth-child(1) {
+  top: -14%;
+  left: -6%;
+  width: 46vw;
+  height: 46vw;
+  background: rgba(var(--acc-rgb), .075);
+  animation: drift-a 26s var(--ease-soft) infinite alternate;
+}
+
+.aurora span:nth-child(2) {
+  top: 28%;
+  right: -12%;
+  width: 40vw;
+  height: 40vw;
+  background: rgba(var(--acc-rgb), .05);
+  animation: drift-b 34s var(--ease-soft) infinite alternate;
+}
+
+.aurora span:nth-child(3) {
+  bottom: -18%;
+  left: 24%;
+  width: 52vw;
+  height: 52vw;
+  background: rgba(255, 255, 255, .022);
+  animation: drift-c 42s var(--ease-soft) infinite alternate;
+}
+
+@keyframes drift-a {
+  to {
+    transform: translate3d(9vw, 6vh, 0) scale(1.18);
+  }
+}
+
+@keyframes drift-b {
+  to {
+    transform: translate3d(-11vw, -7vh, 0) scale(.86);
+  }
+}
+
+@keyframes drift-c {
+  to {
+    transform: translate3d(7vw, -9vh, 0) scale(1.1);
+  }
+}
+
+/* 4b. Grain — the single biggest "expensive dark" signal, ~0 bytes */
+
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  opacity: .032;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* 4c. Editorial grid — now fades at the edges instead of tiling flatly */
 
 .editorial-grid {
-  background-size: 64px 64px;
-
-  background-image:
-    linear-gradient(
-      to right,
-      rgba(255, 255, 255, 0.03) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      to bottom,
-      rgba(255, 255, 255, 0.03) 1px,
-      transparent 1px
-    );
+  position: relative;
 }
 
-/* ========================================
-   PAGE ENTRANCE ANIMATION
-======================================== */
+/* The grid lives on a pseudo-element so the fade mask applies to the lines
+   only. Masking the section itself would fade its content away too. */
+.editorial-grid::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-size: 64px 64px;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, .04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, .04) 1px, transparent 1px);
+  -webkit-mask-image: radial-gradient(118% 82% at 50% 0%, #000 42%, transparent 100%);
+  mask-image: radial-gradient(118% 82% at 50% 0%, #000 42%, transparent 100%);
+}
 
-@keyframes trimarga-page-enter {
+/* Keep content above the grid lines */
+.editorial-grid > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* A hairline of accent light along the bottom seam of hero bands */
+.editorial-grid::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(var(--acc-rgb), .42) 32%,
+      rgba(var(--acc-rgb), .42) 68%,
+      transparent);
+  pointer-events: none;
+}
+
+/* Page content rides above the depth layers */
+.stage {
+  position: relative;
+  z-index: 2;
+}
+
+/* ============================================================
+   5. SCROLL CHOREOGRAPHY
+   Direction-aware, staggered by index — not one uniform fade.
+============================================================ */
+
+/* Scoped to `js-motion` (set in index.html before first paint) so that if
+   scripting fails, every block stays visible instead of being stuck at zero
+   opacity. */
+.js-motion .reveal {
+  opacity: 0;
+}
+
+.reveal.revealed {
+  animation: reveal-up var(--t-slow) var(--ease) both;
+  animation-delay: calc(var(--i, 0) * var(--stagger));
+}
+
+.reveal.from-left.revealed {
+  animation-name: reveal-left;
+}
+
+.reveal.from-right.revealed {
+  animation-name: reveal-right;
+}
+
+.reveal.from-scale.revealed {
+  animation-name: reveal-scale;
+}
+
+@keyframes reveal-up {
   from {
     opacity: 0;
-    transform: translate3d(0, 18px, 0);
+    transform: translate3d(0, 26px, 0);
   }
 
   to {
     opacity: 1;
-    transform: translate3d(0, 0, 0);
+    transform: none;
+  }
+}
+
+@keyframes reveal-left {
+  from {
+    opacity: 0;
+    transform: translate3d(-28px, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes reveal-right {
+  from {
+    opacity: 0;
+    transform: translate3d(28px, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes reveal-scale {
+  from {
+    opacity: 0;
+    transform: scale(.955) translate3d(0, 14px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Headline reveal, word by word, from behind a clipping edge */
+
+.words {
+  display: inline;
+}
+
+.words .w {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: .08em;
+  margin-bottom: -.08em;
+}
+
+.words .w > span {
+  display: inline-block;
+  transform: translateY(105%);
+  animation: word-rise .95s var(--ease) both;
+  animation-delay: calc(var(--i, 0) * 45ms + 120ms);
+}
+
+@keyframes word-rise {
+  to {
+    transform: none;
+  }
+}
+
+/* ============================================================
+   6. PAGE ENTRANCE / ROUTE TRANSITION
+============================================================ */
+
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
 
 .page-enter {
-  animation: trimarga-page-enter 480ms
-    cubic-bezier(.2, .8, .2, 1) both;
+  animation: page-enter 520ms var(--ease) both;
 }
 
-/* ========================================
-   SCROLL REVEAL ANIMATION
-======================================== */
+/* Route loading skeleton — shaped like content, not a spinner on a void */
 
-@keyframes trimarga-reveal {
-  from {
-    opacity: 0;
-    transform: translate3d(0, 22px, 0);
-  }
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: var(--ink-2);
+}
 
+.skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, .055),
+      transparent);
+  animation: shimmer 1.5s var(--ease-soft) infinite;
+}
+
+@keyframes shimmer {
   to {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
+    transform: translateX(100%);
   }
 }
 
-.reveal-on-scroll {
-  opacity: 0;
+/* ============================================================
+   7. SCROLL PROGRESS
+   Native scroll-driven where supported, zero JS.
+============================================================ */
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 60;
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  background: linear-gradient(90deg, var(--acc-deep), var(--acc), var(--acc-soft));
+  pointer-events: none;
 }
 
-.reveal-on-scroll.revealed {
-  animation: trimarga-reveal 600ms
-    cubic-bezier(.2, .8, .2, 1) both;
+@supports (animation-timeline: scroll()) {
+  .scroll-progress {
+    animation: progress-grow linear both;
+    animation-timeline: scroll(root block);
+  }
 }
 
-/* ========================================
-   INTERACTIVE STYLING
-======================================== */
+@keyframes progress-grow {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* ============================================================
+   8. INTERACTION
+   Deliberate per role — no blanket hover on every link.
+============================================================ */
 
 a,
 button,
@@ -157,54 +475,261 @@ header button,
 footer a,
 footer button {
   transition:
-    transform 220ms ease,
-    box-shadow 220ms ease,
-    background-color 220ms ease,
-    border-color 220ms ease,
-    color 220ms ease;
+    color var(--t-fast) ease,
+    background-color var(--t-fast) ease,
+    border-color var(--t-fast) ease,
+    transform var(--t-move) var(--ease),
+    box-shadow var(--t-move) var(--ease);
 }
 
-/* ========================================
-   HOVER EFFECTS
-======================================== */
+/* 8a. Primary action — lifts, glows, and sweeps a sheen */
+
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  transform: translateX(-120%) skewX(-18deg);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .55), transparent);
+  transition: transform .72s var(--ease);
+}
 
 @media (hover: hover) {
-
-  main a:hover,
-  main button:hover,
-  header button:hover,
-  footer a:hover {
+  .btn-primary:hover {
     transform: translateY(-2px);
+    box-shadow: 0 14px 38px rgba(var(--acc-rgb), .26);
   }
 
-  main a:active,
-  main button:active,
-  header button:active {
-    transform: translateY(0) scale(.97);
+  .btn-primary:hover::after {
+    transform: translateX(120%) skewX(-18deg);
   }
 
-  main a[class*="border"]:hover,
-  main button[class*="border"]:hover {
-    box-shadow: 0 8px 30px rgba(251, 175, 1, .13);
+  .btn-ghost:hover {
+    border-color: var(--acc);
+    color: var(--acc);
+    box-shadow: 0 10px 30px rgba(var(--acc-rgb), .1);
   }
 }
 
-/* ========================================
-   FOCUS STYLING
-======================================== */
+.btn-primary:active,
+.btn-ghost:active {
+  transform: translateY(0) scale(.98);
+}
+
+/* 8b. Cursor-following spotlight for cards */
+
+.spot {
+  position: relative;
+  isolation: isolate;
+}
+
+.spot::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0;
+  pointer-events: none;
+  /* --card-rgb lets a card glow in its own path hue; falls back to accent. */
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%),
+      rgba(var(--card-rgb, var(--acc-rgb)), .12),
+      transparent 62%);
+  transition: opacity var(--t-move) var(--ease);
+}
+
+@media (hover: hover) {
+  .spot:hover::before {
+    opacity: 1;
+  }
+}
+
+/* 8b-ii. Path band — a rule in the path's own hue draws itself in */
+
+.path-band {
+  position: relative;
+}
+
+.path-band::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  background: linear-gradient(90deg, var(--card-hue, var(--acc)), transparent 88%);
+}
+
+.path-band.revealed::after,
+html:not(.js-motion) .path-band::after {
+  animation: band-draw 1.15s var(--ease) both .12s;
+}
+
+html:not(.js-motion) .path-band::after {
+  transform: scaleX(1);
+  animation: none;
+}
+
+@keyframes band-draw {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* 8b-iii. Process line — three hues blending into one, drawn as it enters */
+
+.process-line {
+  background: linear-gradient(90deg,
+      var(--path-1),
+      var(--path-2) 52%,
+      var(--path-3));
+  opacity: .55;
+  transform-origin: 0 50%;
+  animation: band-draw 1.6s var(--ease) both .2s;
+}
+
+@supports (animation-timeline: view()) {
+  .process-line {
+    transform: scaleX(0);
+    animation: band-draw linear both;
+    animation-timeline: view();
+    animation-range: entry 10% cover 55%;
+  }
+}
+
+/* 8c. Service card — accent edge draws in, number lifts */
+
+.card-edge {
+  position: relative;
+}
+
+.card-edge::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  background: linear-gradient(90deg, var(--card-hue, var(--acc)), transparent);
+  transition: transform var(--t-move) var(--ease);
+}
+
+@media (hover: hover) {
+  .group:hover .card-edge::after,
+  .card-edge:hover::after {
+    transform: scaleX(1);
+  }
+
+  .group:hover .card-num {
+    transform: translateY(-2px) scale(1.14);
+    color: var(--acc-soft);
+  }
+}
+
+.card-num {
+  display: inline-block;
+  transition: transform var(--t-move) var(--ease-pop), color var(--t-fast) ease;
+  transform-origin: 0 50%;
+}
+
+/* 8d. Arrow nudge on hover */
+
+.group:hover .nudge {
+  transform: translate(3px, -3px);
+}
+
+.nudge {
+  transition: transform var(--t-move) var(--ease);
+}
+
+/* ============================================================
+   9. MARQUEE
+============================================================ */
+
+.marquee {
+  display: flex;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+}
+
+.marquee__track {
+  display: flex;
+  flex: 0 0 auto;
+  min-width: 100%;
+  gap: 0;
+  animation: marquee-run var(--speed, 46s) linear infinite;
+  will-change: transform;
+}
+
+.marquee:hover .marquee__track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-run {
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+/* ============================================================
+   10. FAQ — height animates instead of snapping
+============================================================ */
+
+.faq-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--t-move) var(--ease);
+}
+
+.faq-panel.is-open {
+  grid-template-rows: 1fr;
+}
+
+.faq-panel > div {
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity var(--t-fast) ease;
+}
+
+.faq-panel.is-open > div {
+  opacity: 1;
+  transition: opacity var(--t-move) ease var(--t-fast);
+}
+
+.faq-sign {
+  transition: transform var(--t-move) var(--ease);
+}
+
+.faq-sign.is-open {
+  transform: rotate(135deg);
+}
+
+/* ============================================================
+   11. FOCUS
+============================================================ */
 
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
-  outline: 2px solid #FBAF01;
+  outline: 2px solid var(--acc);
   outline-offset: 4px;
 }
 
-/* ========================================
-   CREATIVE CURSOR
-======================================== */
+/* ============================================================
+   12. CREATIVE CURSOR — now contextual
+============================================================ */
 
 .creative-cursor-dot,
 .creative-cursor-ring {
@@ -216,28 +741,28 @@ select:focus-visible {
   z-index: 9999;
   opacity: 0;
   border-radius: 50%;
-
   transition:
-    opacity 160ms ease,
-    width 180ms ease,
-    height 180ms ease,
-    background 180ms ease;
+    opacity var(--t-fast) ease,
+    width .24s var(--ease),
+    height .24s var(--ease),
+    background .24s var(--ease),
+    border-color var(--t-fast) ease;
 }
 
 @media (hover: hover) and (pointer: fine) {
-
   .creative-cursor-dot {
     display: block;
-    width: 7px;
-    height: 7px;
-    background: #FBAF01;
+    width: 6px;
+    height: 6px;
+    background: var(--acc);
   }
 
   .creative-cursor-ring {
-    display: block;
-    width: 34px;
-    height: 34px;
-    border: 1px solid rgba(251, 175, 1, .85);
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border: 1px solid rgba(var(--acc-rgb), .8);
   }
 
   .creative-cursor-dot.is-visible,
@@ -246,32 +771,361 @@ select:focus-visible {
   }
 
   .creative-cursor-ring.is-interactive {
-    width: 48px;
-    height: 48px;
-    background: rgba(251, 175, 1, .12);
+    width: 46px;
+    height: 46px;
+    background: rgba(var(--acc-rgb), .12);
+  }
+
+  /* Over a demo card the ring becomes a labelled pill */
+  .creative-cursor-ring.is-labelled {
+    width: 92px;
+    height: 92px;
+    background: var(--acc);
+    border-color: var(--acc);
+  }
+
+  .creative-cursor-ring .cursor-label {
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ink-1);
+    opacity: 0;
+    transition: opacity var(--t-fast) ease;
+    white-space: nowrap;
+  }
+
+  .creative-cursor-ring.is-labelled .cursor-label {
+    opacity: 1;
+  }
+
+  .creative-cursor-dot.is-labelled {
+    opacity: 0;
   }
 }
 
-/* ========================================
-   TABLET RESPONSIVE ALIGNMENT
-======================================== */
+/* ============================================================
+   13. FLOATING CONTACT
+============================================================ */
 
-@media (max-width: 1024px) {
-
-  :root {
-    --section-spacing: 32px;
+@keyframes pulse-ring {
+  0% {
+    transform: scale(.92);
+    opacity: .7;
   }
 
+  70% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
 }
 
-/* ========================================
-   MOBILE RESPONSIVE ALIGNMENT
-======================================== */
+.pulse-ring::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: currentColor;
+  animation: pulse-ring 2.6s var(--ease-soft) infinite;
+  z-index: -1;
+}
+
+/* ============================================================
+   13b. THREE-PATH MARK
+============================================================ */
+
+.tpm-arc,
+.tpm-approach {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: tpm-draw .95s var(--ease) both;
+  animation-delay: calc(var(--i) * .14s + .35s);
+}
+
+.tpm-approach {
+  animation-duration: .75s;
+  animation-delay: calc(var(--i) * .11s);
+}
+
+@keyframes tpm-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Once drawn, the mark keeps a slow life of its own. Each arc pulses on its
+   own phase so the shape never breathes in lockstep. */
+.three-path-mark.is-idle {
+  animation: tpm-breathe 8s ease-in-out 1.8s infinite;
+  transform-origin: 50% 50%;
+}
+
+.three-path-mark.is-idle .tpm-arc {
+  animation:
+    tpm-draw .95s var(--ease) both,
+    tpm-pulse 5s ease-in-out infinite;
+  animation-delay:
+    calc(var(--i) * .14s + .35s),
+    calc(var(--i) * 1.6s + 1.6s);
+}
+
+@keyframes tpm-breathe {
+  50% {
+    transform: scale(1.035) rotate(2.5deg);
+  }
+}
+
+@keyframes tpm-pulse {
+  50% {
+    opacity: .55;
+  }
+}
+
+/* The hero's large mark: faint enough to sit behind copy, and drifting
+   against the pointer via --px/--py set once on :root by Atmosphere. */
+.hero-mark {
+  opacity: .22;
+  z-index: 0;
+}
+
+/* Parallax lives on its own wrapper: the mark's idle "breathe" animation owns
+   the SVG's transform, and two transforms on one element would fight. */
+.hero-mark__drift {
+  transform: translate3d(calc(var(--px, 0) * -26px),
+      calc(var(--py, 0) * -18px),
+      0);
+  transition: transform .9s var(--ease);
+}
+
+/* Its lines wait for the preloader to hand over, then draw in. */
+.js-motion:not(.intro-done) .hero-mark .tpm-arc {
+  animation-play-state: paused;
+}
+
+/* ============================================================
+   13c. PRELOADER
+============================================================ */
+
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.preloader__panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: calc(100% / 3 + 1px);
+  background: var(--ink-1);
+  transform: translateY(0);
+  transition: transform .7s var(--ease);
+}
+
+.preloader__panel:nth-child(1) {
+  left: 0;
+}
+
+.preloader__panel:nth-child(2) {
+  left: calc(100% / 3);
+  transition-delay: .07s;
+}
+
+.preloader__panel:nth-child(3) {
+  left: calc(200% / 3);
+  transition-delay: .14s;
+}
+
+.preloader.is-lifting .preloader__panel {
+  transform: translateY(-101%);
+}
+
+.preloader__stage {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.75rem;
+  transition: opacity .45s var(--ease), transform .6s var(--ease);
+}
+
+.preloader.is-lifting .preloader__stage {
+  opacity: 0;
+  transform: scale(1.1);
+}
+
+.preloader__meta {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.preloader__word {
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .45);
+  animation: reveal-up .8s var(--ease) both .5s;
+}
+
+.preloader__count {
+  font-variant-numeric: tabular-nums;
+  font-size: .95rem;
+  font-weight: 700;
+  color: var(--acc);
+  animation: reveal-up .8s var(--ease) both .6s;
+}
+
+/* ============================================================
+   13d. INTRO GATE
+   Hero animations hold at their first frame until the preloader hands over,
+   so nothing competes with the intro. Gated on `js-motion` as well, so a
+   page without scripting simply shows everything.
+============================================================ */
+
+.js-motion .intro-gate {
+  animation-play-state: paused;
+}
+
+.js-motion.intro-done .intro-gate {
+  animation-play-state: running;
+}
+
+.intro-rise {
+  animation: reveal-up .9s var(--ease) both;
+  animation-delay: calc(var(--d, 0) * 1ms);
+}
+
+.intro-slide {
+  animation: reveal-right 1s var(--ease) both;
+  animation-delay: calc(var(--d, 0) * 1ms);
+}
+
+/* ============================================================
+   13d-ii. ROUTE CURTAIN
+============================================================ */
+
+.route-curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 9990;
+  display: flex;
+  pointer-events: none;
+}
+
+.route-curtain span {
+  flex: 1;
+  background: var(--ink-1);
+  transform: translateY(-100%);
+  animation: curtain-sweep .82s var(--ease-soft) both;
+}
+
+.route-curtain span:nth-child(1) {
+  border-right: 1px solid rgba(var(--path-1-rgb), .25);
+}
+
+.route-curtain span:nth-child(2) {
+  animation-delay: .05s;
+  border-right: 1px solid rgba(var(--path-2-rgb), .25);
+}
+
+.route-curtain span:nth-child(3) {
+  animation-delay: .1s;
+}
+
+@keyframes curtain-sweep {
+  0% {
+    transform: translateY(-100%);
+  }
+
+  42% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+/* ============================================================
+   13e. BLUR-TO-SHARP TEXT
+   Characters resolving out of focus reads far richer than a fade. Words are
+   released in a shuffled order so it feels organic rather than mechanical.
+============================================================ */
+
+.blur-words .w {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.blur-words .w > span {
+  display: inline-block;
+  opacity: 0;
+  filter: blur(14px);
+  animation: word-focus .9s var(--ease) both;
+  animation-delay: calc(var(--d, 0) * 1ms);
+}
+
+@keyframes word-focus {
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+/* ============================================================
+   13f. MAGNETIC + TILT + CLIP REVEAL
+============================================================ */
+
+.magnetic {
+  transition: transform .5s var(--ease);
+}
+
+.tilt {
+  transition: transform .5s var(--ease);
+  transform-style: preserve-3d;
+}
+
+.js-motion .clip-reveal {
+  clip-path: inset(0 100% 0 0);
+}
+
+.clip-reveal.revealed {
+  animation: clip-in 1s var(--ease) both;
+  animation-delay: calc(var(--i, 0) * var(--stagger));
+}
+
+@keyframes clip-in {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* ============================================================
+   14. RESPONSIVE
+============================================================ */
 
 @media (max-width: 640px) {
-
   :root {
-    --section-spacing: 24px;
+    --stagger: 48ms;
+  }
+
+  .aurora span {
+    filter: blur(70px);
   }
 
   main .mt-14,
@@ -282,39 +1136,55 @@ select:focus-visible {
   main .mb-10 {
     margin-bottom: 20px;
   }
-
 }
 
-/* ========================================
-   REDUCED MOTION ACCESSIBILITY
-======================================== */
+/* ============================================================
+   15. REDUCED MOTION
+============================================================ */
 
 @media (prefers-reduced-motion: reduce) {
-
   html {
     scroll-behavior: auto;
   }
 
-  .page-enter,
-  .reveal-on-scroll.revealed {
-    animation: none !important;
+  *,
+  *::before,
+  *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
   }
 
-  .reveal-on-scroll {
+  .reveal {
     opacity: 1 !important;
   }
 
+  .words .w > span {
+    transform: none !important;
+  }
+
+  .aurora,
+  .grain,
+  .preloader,
   .creative-cursor-dot,
   .creative-cursor-ring {
     display: none !important;
   }
 
-  main a,
-  main button,
-  header a,
-  header button,
-  footer a,
-  footer button {
-    transition: none !important;
+  .blur-words .w > span {
+    opacity: 1 !important;
+    filter: none !important;
+  }
+
+  .clip-reveal {
+    clip-path: none !important;
+  }
+
+  .intro-gate {
+    animation-play-state: running !important;
+  }
+
+  .scroll-progress {
+    display: none;
   }
 }

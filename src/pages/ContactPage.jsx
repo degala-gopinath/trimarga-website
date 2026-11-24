@@ -39,7 +39,7 @@ export default function ContactPage() {
   ];
 
   return (
-    <div className="bg-[#0A0A0A] text-white">
+    <div className="text-white">
 
       {/* Contact Section */}
       <section className="border-b border-white/15 py-20">
@@ -68,7 +68,7 @@ export default function ContactPage() {
               </div>
 
               {/* Contact Details */}
-              <div className="divide-y divide-white/10 border border-white/15 bg-[#111111]">
+              <div className="divide-y divide-white/10 border border-white/15 bg-[#110F0C]">
 
                 {/* Phone */}
                 <div className="p-5">
@@ -121,7 +121,7 @@ export default function ContactPage() {
               </div>
 
               {/* Simple Social Media Section */}
-              <div className="border border-white/15 bg-[#111111] p-6 sm:p-8">
+              <div className="border border-white/15 bg-[#110F0C] p-6 sm:p-8">
 
                 <h2 className="text-center font-serif text-2xl font-bold text-white">
                   Connect With Us
@@ -148,7 +148,7 @@ export default function ContactPage() {
                       >
 
                         {/* Social Logo */}
-                        <div className="flex h-14 w-14 items-center justify-center rounded-full border border-[#FBAF01]/40 bg-[#FBAF01]/10 text-[#FBAF01] transition-all duration-300 group-hover:-translate-y-1 group-hover:border-[#FBAF01] group-hover:bg-[#FBAF01] group-hover:text-[#0A0A0A] motion-reduce:transform-none">
+                        <div className="flex h-14 w-14 items-center justify-center rounded-full border border-[#FBAF01]/40 bg-[#FBAF01]/10 text-[#FBAF01] transition-all duration-300 group-hover:-translate-y-1 group-hover:border-[#FBAF01] group-hover:bg-[#FBAF01] group-hover:text-[#0A0907] motion-reduce:transform-none">
 
                           <Icon className="h-7 w-7" />
 

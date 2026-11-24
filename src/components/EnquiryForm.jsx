@@ -73,8 +73,8 @@ export default function EnquiryForm({ preselectedNeed = '' }) {
 
   if (submitted) {
     return (
-      <div className="border border-[#FBAF01] bg-[#111111] p-8 sm:p-12 space-y-6">
-        <div className="inline-flex h-10 w-10 items-center justify-center bg-[#FBAF01] text-[#0A0A0A]">
+      <div className="border border-[#FBAF01] bg-[#110F0C] p-8 sm:p-12 space-y-6">
+        <div className="inline-flex h-10 w-10 items-center justify-center bg-[#FBAF01] text-[#0A0907]">
           <Check className="h-5 w-5 stroke-[3]" />
         </div>
 
@@ -93,7 +93,7 @@ export default function EnquiryForm({ preselectedNeed = '' }) {
             href={SITE_CONFIG.whatsappUrl}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center justify-center bg-[#FBAF01] px-6 py-3 text-xs font-extrabold uppercase tracking-wider text-[#0A0A0A] hover:bg-white transition-colors"
+            className="inline-flex items-center justify-center btn-primary bg-[#FBAF01] px-6 py-3 text-xs font-extrabold uppercase tracking-wider text-[#0A0907] hover:bg-white"
           >
             WhatsApp ({SITE_CONFIG.phoneDisplay})
           </a>
@@ -113,7 +113,7 @@ export default function EnquiryForm({ preselectedNeed = '' }) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="border border-white/15 bg-[#111111] p-6 sm:p-10 space-y-6"
+      className="border border-white/15 bg-[#110F0C] p-6 sm:p-10 space-y-6"
     >
       {/* Honeypot Field */}
       <input
@@ -149,7 +149,7 @@ export default function EnquiryForm({ preselectedNeed = '' }) {
               })
             }
             placeholder="Full name"
-            className="w-full border border-white/20 bg-[#0A0A0A] px-4 py-3 text-sm text-white placeholder-white/35 focus:border-[#FBAF01] focus:outline-none"
+            className="w-full border border-white/20 bg-[#0A0907] px-4 py-3 text-sm text-white placeholder-white/35 focus:border-[#FBAF01] focus:outline-none"
           />
         </div>
 
@@ -169,7 +169,7 @@ export default function EnquiryForm({ preselectedNeed = '' }) {
               })
             }
             placeholder="Shop, clinic, studio, or company"
-            className="w-full border border-white/20 bg-[#0A0A0A] px-4 py-3 text-sm text-white placeholder-white/35 focus:border-[#FBAF01] focus:outline-none"
+            className="w-full border border-white/20 bg-[#0A0907] px-4 py-3 text-sm text-white placeholder-white/35 focus:border-[#FBAF01] focus:outline-none"
           />
         </div>
       </div>
@@ -192,7 +192,7 @@ export default function EnquiryForm({ preselectedNeed = '' }) {
               })
             }
             placeholder="Main reply channel"
-            className="w-full border border-white/20 bg-[#0A0A0A] px-4 py-3 text-sm text-white placeholder-white/35 focus:border-[#FBAF01] focus:outline-none"
+            className="w-full border border-white/20 bg-[#0A0907] px-4 py-3 text-sm text-white placeholder-white/35 focus:border-[#FBAF01] focus:outline-none"
           />
         </div>
 
@@ -213,7 +213,7 @@ export default function EnquiryForm({ preselectedNeed = '' }) {
               })
             }
             placeholder="name@business.com"
-            className="w-full border border-white/20 bg-[#0A0A0A] px-4 py-3 text-sm text-white placeholder-white/35 focus:border-[#FBAF01] focus:outline-none"
+            className="w-full border border-white/20 bg-[#0A0907] px-4 py-3 text-sm text-white placeholder-white/35 focus:border-[#FBAF01] focus:outline-none"
           />
         </div>
       </div>
@@ -235,7 +235,7 @@ export default function EnquiryForm({ preselectedNeed = '' }) {
                 businessType: e.target.value
               })
             }
-            className="w-full border border-white/20 bg-[#0A0A0A] px-4 py-3 text-sm text-white focus:border-[#FBAF01] focus:outline-none"
+            className="w-full border border-white/20 bg-[#0A0907] px-4 py-3 text-sm text-white focus:border-[#FBAF01] focus:outline-none"
           >
             <option value="" disabled>
               Select Business Type
@@ -245,7 +245,7 @@ export default function EnquiryForm({ preselectedNeed = '' }) {
               <option
                 key={type}
                 value={type}
-                className="bg-[#0A0A0A] text-white"
+                className="bg-[#0A0907] text-white"
               >
                 {type}
               </option>
@@ -270,7 +270,7 @@ export default function EnquiryForm({ preselectedNeed = '' }) {
               })
             }
             placeholder="Needed for local SEO and ads advice"
-            className="w-full border border-white/20 bg-[#0A0A0A] px-4 py-3 text-sm text-white placeholder-white/35 focus:border-[#FBAF01] focus:outline-none"
+            className="w-full border border-white/20 bg-[#0A0907] px-4 py-3 text-sm text-white placeholder-white/35 focus:border-[#FBAF01] focus:outline-none"
           />
         </div>
       </div>
@@ -292,8 +292,8 @@ export default function EnquiryForm({ preselectedNeed = '' }) {
                 onClick={() => toggleNeed(option)}
                 className={`border px-3.5 py-2 text-xs font-semibold transition-colors ${
                   checked
-                    ? 'border-[#FBAF01] bg-[#FBAF01] text-[#0A0A0A]'
-                    : 'border-white/20 bg-[#0A0A0A] text-white/80 hover:border-white/50'
+                    ? 'border-[#FBAF01] bg-[#FBAF01] text-[#0A0907]'
+                    : 'border-white/20 bg-[#0A0907] text-white/80 hover:border-white/50'
                 }`}
               >
                 {option}
@@ -319,14 +319,14 @@ export default function EnquiryForm({ preselectedNeed = '' }) {
             })
           }
           placeholder="Tell us about your business and what you would like to achieve..."
-          className="w-full border border-white/20 bg-[#0A0A0A] px-4 py-3 text-sm text-white placeholder-white/35 focus:border-[#FBAF01] focus:outline-none"
+          className="w-full border border-white/20 bg-[#0A0907] px-4 py-3 text-sm text-white placeholder-white/35 focus:border-[#FBAF01] focus:outline-none"
         />
       </div>
 
       {/* Submit Button */}
       <button
         type="submit"
-        className="w-full inline-flex items-center justify-center gap-2 bg-[#FBAF01] px-6 py-4 text-xs font-extrabold uppercase tracking-[0.14em] text-[#0A0A0A] hover:bg-white transition-colors"
+        className="w-full inline-flex items-center justify-center gap-2 btn-primary bg-[#FBAF01] px-6 py-4 text-xs font-extrabold uppercase tracking-[0.14em] text-[#0A0907] hover:bg-white"
       >
         <span>Send My Details</span>
         <ArrowRight className="h-4 w-4" />

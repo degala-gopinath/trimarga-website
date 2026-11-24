@@ -6,7 +6,7 @@ import DemoCard from '../components/DemoCard';
 
 export default function WorkPage() {
   return (
-    <div className="bg-[#0A0A0A] text-white">
+    <div className="text-white">
       {/* Header */}
       <section className="editorial-grid border-b border-white/15 py-20">
         <div className="mx-auto max-w-5xl px-5 sm:px-8">
@@ -36,7 +36,7 @@ export default function WorkPage() {
       {/* Final CTA */}
       <section className="py-20">
         <div className="mx-auto max-w-4xl px-5 sm:px-8">
-          <div className="border-l-4 border-[#FBAF01] bg-[#111111] border border-white/15 p-8 sm:p-12 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+          <div className="border-l-4 border-[#FBAF01] bg-[#110F0C] border border-white/15 p-8 sm:p-12 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
             <div>
               <h2 className="font-serif text-2xl sm:text-3xl font-bold text-white">
                 Want a website customised for your business?
@@ -47,7 +47,7 @@ export default function WorkPage() {
             </div>
             <Link
               to="/contact"
-              className="shrink-0 inline-flex items-center justify-center gap-2 bg-[#FBAF01] px-7 py-4 text-xs font-extrabold uppercase tracking-[0.14em] text-[#0A0A0A] hover:bg-white transition-colors"
+              className="shrink-0 inline-flex items-center justify-center gap-2 btn-primary bg-[#FBAF01] px-7 py-4 text-xs font-extrabold uppercase tracking-[0.14em] text-[#0A0907] hover:bg-white"
             >
               <span>Get a Free Consultation</span>
               <ArrowRight className="h-4 w-4" />
