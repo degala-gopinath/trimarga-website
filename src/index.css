@@ -1,0 +1,320 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ========================================
+   GLOBAL STYLING
+======================================== */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: #0A0A0A;
+    color: #FFFFFF;
+    font-family: 'Plus Jakarta Sans', system-ui,
+      -apple-system, sans-serif;
+  }
+
+  body {
+    margin: 0;
+    overflow-x: hidden;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+}
+
+/* ========================================
+   GLOBAL PAGE SPACING
+======================================== */
+
+:root {
+  --section-spacing: 40px;
+}
+
+main {
+  width: 100%;
+  margin: 0;
+}
+
+/* Consistent spacing across page sections */
+main section[class*="py-"] {
+  padding-top: var(--section-spacing) !important;
+  padding-bottom: var(--section-spacing) !important;
+}
+
+/* Normalize large container padding */
+main section > div[class*="py-20"],
+main section > div[class*="py-24"],
+main section > div[class*="py-28"],
+main section > div[class*="py-32"] {
+  padding-top: var(--section-spacing) !important;
+  padding-bottom: var(--section-spacing) !important;
+}
+
+/* Hero section spacing */
+main section.editorial-grid {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+main section.editorial-grid > div {
+  padding-top: var(--section-spacing) !important;
+  padding-bottom: var(--section-spacing) !important;
+}
+
+/* Reduce excessive content spacing */
+main .mt-14,
+main .mt-12 {
+  margin-top: 24px;
+}
+
+main .mb-10 {
+  margin-bottom: 24px;
+}
+
+/* ========================================
+   ORIGINAL EDITORIAL GRID BACKGROUND
+======================================== */
+
+.editorial-grid {
+  background-size: 64px 64px;
+
+  background-image:
+    linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.03) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.03) 1px,
+      transparent 1px
+    );
+}
+
+/* ========================================
+   PAGE ENTRANCE ANIMATION
+======================================== */
+
+@keyframes trimarga-page-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.page-enter {
+  animation: trimarga-page-enter 480ms
+    cubic-bezier(.2, .8, .2, 1) both;
+}
+
+/* ========================================
+   SCROLL REVEAL ANIMATION
+======================================== */
+
+@keyframes trimarga-reveal {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 22px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.reveal-on-scroll {
+  opacity: 0;
+}
+
+.reveal-on-scroll.revealed {
+  animation: trimarga-reveal 600ms
+    cubic-bezier(.2, .8, .2, 1) both;
+}
+
+/* ========================================
+   INTERACTIVE STYLING
+======================================== */
+
+a,
+button,
+[role="button"] {
+  -webkit-tap-highlight-color: transparent;
+}
+
+main a,
+main button,
+header a,
+header button,
+footer a,
+footer button {
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    background-color 220ms ease,
+    border-color 220ms ease,
+    color 220ms ease;
+}
+
+/* ========================================
+   HOVER EFFECTS
+======================================== */
+
+@media (hover: hover) {
+
+  main a:hover,
+  main button:hover,
+  header button:hover,
+  footer a:hover {
+    transform: translateY(-2px);
+  }
+
+  main a:active,
+  main button:active,
+  header button:active {
+    transform: translateY(0) scale(.97);
+  }
+
+  main a[class*="border"]:hover,
+  main button[class*="border"]:hover {
+    box-shadow: 0 8px 30px rgba(251, 175, 1, .13);
+  }
+}
+
+/* ========================================
+   FOCUS STYLING
+======================================== */
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid #FBAF01;
+  outline-offset: 4px;
+}
+
+/* ========================================
+   CREATIVE CURSOR
+======================================== */
+
+.creative-cursor-dot,
+.creative-cursor-ring {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0;
+  border-radius: 50%;
+
+  transition:
+    opacity 160ms ease,
+    width 180ms ease,
+    height 180ms ease,
+    background 180ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+
+  .creative-cursor-dot {
+    display: block;
+    width: 7px;
+    height: 7px;
+    background: #FBAF01;
+  }
+
+  .creative-cursor-ring {
+    display: block;
+    width: 34px;
+    height: 34px;
+    border: 1px solid rgba(251, 175, 1, .85);
+  }
+
+  .creative-cursor-dot.is-visible,
+  .creative-cursor-ring.is-visible {
+    opacity: 1;
+  }
+
+  .creative-cursor-ring.is-interactive {
+    width: 48px;
+    height: 48px;
+    background: rgba(251, 175, 1, .12);
+  }
+}
+
+/* ========================================
+   TABLET RESPONSIVE ALIGNMENT
+======================================== */
+
+@media (max-width: 1024px) {
+
+  :root {
+    --section-spacing: 32px;
+  }
+
+}
+
+/* ========================================
+   MOBILE RESPONSIVE ALIGNMENT
+======================================== */
+
+@media (max-width: 640px) {
+
+  :root {
+    --section-spacing: 24px;
+  }
+
+  main .mt-14,
+  main .mt-12 {
+    margin-top: 20px;
+  }
+
+  main .mb-10 {
+    margin-bottom: 20px;
+  }
+
+}
+
+/* ========================================
+   REDUCED MOTION ACCESSIBILITY
+======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  .page-enter,
+  .reveal-on-scroll.revealed {
+    animation: none !important;
+  }
+
+  .reveal-on-scroll {
+    opacity: 1 !important;
+  }
+
+  .creative-cursor-dot,
+  .creative-cursor-ring {
+    display: none !important;
+  }
+
+  main a,
+  main button,
+  header a,
+  header button,
+  footer a,
+  footer button {
+    transition: none !important;
+  }
+}
