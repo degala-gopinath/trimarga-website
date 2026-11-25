@@ -21,6 +21,7 @@ import Atmosphere from './components/Atmosphere';
 import FloatingContact from './components/FloatingContact';
 import Preloader from './components/Preloader';
 import RouteCurtain from './components/RouteCurtain';
+import ErrorBoundary from './components/ErrorBoundary';
 
 // Lazy Loaded Pages
 const HomePage = lazy(() => import('./pages/HomePage'));
@@ -99,6 +100,7 @@ function AnimatedPages() {
       className="stage flex-1 page-enter"
       id="main-content"
     >
+      <ErrorBoundary>
       <Suspense fallback={<PageLoader />}>
 
         <Routes>
@@ -141,6 +143,7 @@ function AnimatedPages() {
         <RevealOnScroll />
 
       </Suspense>
+      </ErrorBoundary>
     </main>
   );
 }

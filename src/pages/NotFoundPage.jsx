@@ -1,7 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function NotFoundPage() {
+  // A single-page app has to answer every URL with the app shell, so unknown
+  // addresses come back as HTTP 200. Tell search engines not to index them.
+  useEffect(() => {
+    const meta = document.createElement('meta');
+    meta.name = 'robots';
+    meta.content = 'noindex';
+    document.head.appendChild(meta);
+    return () => meta.remove();
+  }, []);
+
   return (
     <div className="bg-[#0A0907] text-white py-28">
       <div className="mx-auto max-w-xl px-5 text-center space-y-6">

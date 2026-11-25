@@ -53,6 +53,12 @@
 
 @layer base {
   html {
+    /* Reserve the scrollbar's width permanently. The preloader locks scrolling
+       on first visit, which makes a classic (non-overlay) scrollbar vanish and
+       reappear — widening and narrowing the page ~15px and shifting everything
+       sideways. Measured as CLS 0.73 on a cold desktop visit (0.009 without
+       the preloader). Reserving the gutter removes the width change entirely. */
+    scrollbar-gutter: stable;
     scroll-behavior: smooth;
     background-color: var(--ink-1);
     color: #FFFFFF;
@@ -946,6 +952,12 @@ select:focus-visible {
 
 .preloader.is-lifting .preloader__panel {
   transform: translateY(-101%);
+}
+
+/* Once the curtain is lifting, the overlay is purely visual. Even if
+   something went wrong and it lingered, it must never block clicks. */
+.preloader.is-lifting {
+  pointer-events: none;
 }
 
 .preloader__stage {

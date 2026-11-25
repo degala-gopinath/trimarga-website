@@ -18,7 +18,7 @@ export const SITE_CONFIG = {
     trimargaInstagramHandle: '@trimarga.growth',
     trimargaInstagramUrl: 'https://www.instagram.com/trimarga_partners?hvrq=NzJqNHFjaWM3ajhz',
     triopathInstagramUrl: 'https://www.instagram.com/triopath__careers?evlk=MWhhdzdkYno2bm03cw==',
-    triopathLinkedInUrl: ' https://www.linkedin.com/company/triopathcareers',
+    triopathLinkedInUrl: 'https://www.linkedin.com/company/triopathcareers',
     founderInstagramUrl: 'https://www.instagram.com/surya__muppiri?evlk=M24zenpsdjNhcWxq',
   },
   copyright: 'Trimarga Business Growth Partners, by Triopath Careers Private Limited. All rights reserved.',
