@@ -78,17 +78,17 @@ const WHY_CHOOSE_ITEMS = [
 
 const STEPS = [
   {
-    num: 'Step 1',
+    num: 'Step 01',
     title: 'Free consultation',
     desc: 'Tell us about your business, your goals and what is not working today. We listen first.'
   },
   {
-    num: 'Step 2',
+    num: 'Step 02',
     title: 'A plan made for your business',
     desc: 'We share a clear plan and quote - what we will build, what it includes, and what it will cost. No surprises later.'
   },
   {
-    num: 'Step 3',
+    num: 'Step 03',
     title: 'We build, launch and grow',
     desc: 'We design, set up and launch. Then we keep improving with content, ads and monthly reporting while you run your business.'
   }
@@ -288,7 +288,7 @@ export default function HomePage() {
                 <CountUp
                   value={stat.value}
                   suffix={stat.suffix}
-                  className="block font-serif text-[clamp(2.1rem,4.4vw,3.1rem)] font-bold leading-none text-white"
+                  className="block font-serif text-[clamp(2.1rem,4.4vw,3.1rem)] font-bold leading-none tabular-nums text-white"
                 />
 
                 <p className="mt-3 text-xs font-semibold uppercase tracking-[0.14em] leading-relaxed text-white/60">

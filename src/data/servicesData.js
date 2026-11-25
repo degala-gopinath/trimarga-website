@@ -1,4 +1,6 @@
-export const SERVICES_LIST = [
+import { groupByPath } from './paths';
+
+const RAW_SERVICES = [
   {
     id: 'website-design',
     num: '01',
@@ -402,6 +404,20 @@ export const SERVICES_LIST = [
     ]
   }
 ];
+
+/**
+ * The list the whole site reads. Services are put in path order (Get Found,
+ * Look Trusted, Get More Customers) and numbered 01-11 in that order, so the
+ * number on a card, in the menu and on the detail page always matches what
+ * the visitor sees. The numbers used to be fixed in the data above, which
+ * left each path's cards with gaps (01, 02, 03, then 05, 10).
+ */
+export const SERVICES_LIST = groupByPath(RAW_SERVICES)
+  .flatMap((group) => group.services)
+  .map((service, index) => ({
+    ...service,
+    num: String(index + 1).padStart(2, '0')
+  }));
 
 export const GENERAL_FAQS = [
   {
