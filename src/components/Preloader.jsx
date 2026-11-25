@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import ThreePathMark from './ThreePathMark';
+import TrimargaMark from './TrimargaMark';
 
 const SESSION_KEY = 'trimarga:intro-seen';
 
@@ -142,12 +142,21 @@ export default function Preloader() {
       <span className="preloader__panel" aria-hidden="true" />
 
       <div className="preloader__stage">
-        <ThreePathMark size={210} showApproach strokeWidth={2.5} />
+        <TrimargaMark size={200} variant="intro" />
 
-        <div className="preloader__meta">
-          <span className="preloader__word">Three paths</span>
-          <span className="preloader__count">{count}</span>
-        </div>
+        <img
+          className="preloader__wordmark"
+          src="/image/trimarga-wordmark-alpha.webp"
+          width="960"
+          height="193"
+          alt=""
+          decoding="async"
+          fetchpriority="high"
+        />
+
+        <span className="preloader__bar" aria-hidden="true">
+          <i style={{ transform: `scaleX(${count / 100})` }} />
+        </span>
       </div>
     </div>
   );

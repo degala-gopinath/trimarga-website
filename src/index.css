@@ -892,11 +892,103 @@ select:focus-visible {
   }
 }
 
-/* The hero's large mark: faint enough to sit behind copy, and drifting
-   against the pointer via --px/--py set once on :root by Atmosphere. */
+/* ---- Trimarga mark (the real logo, blade by blade) ----------------------
+   Every blade starts displaced outward along its own diagonal, tilted and
+   slightly small, then settles into the pinwheel on an expo-out curve. The
+   offsets are user units (--dx/--dy) and degrees (--rot) set per blade. With
+   animation disabled the blades just sit assembled. */
+
+.trimarga-mark {
+  overflow: visible;
+}
+
+.tm-blade {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: tm-assemble 1.05s var(--ease) both;
+  animation-delay: calc(var(--i) * .09s + var(--tm-delay, 0s));
+}
+
+@keyframes tm-assemble {
+  from {
+    opacity: 0;
+    transform:
+      translate(calc(var(--dx) * 1px), calc(var(--dy) * 1px)) rotate(calc(var(--rot) * 1deg)) scale(.8);
+  }
+
+  60% {
+    opacity: 1;
+  }
+}
+
+/* Intro: solid blades, a warm glow that swells as they lock in, one sheen. */
+.tm--intro {
+  filter: drop-shadow(0 0 0 rgba(251, 175, 1, 0));
+  animation: tm-glow 1.1s ease-out .95s both;
+}
+
+.tm--intro .tm-blade {
+  stroke: none;
+}
+
+@keyframes tm-glow {
+  45% {
+    filter: drop-shadow(0 0 34px rgba(251, 175, 1, .5));
+  }
+
+  to {
+    filter: drop-shadow(0 0 26px rgba(251, 175, 1, .22));
+  }
+}
+
+.tm-sheen {
+  transform: translateX(0) skewX(-18deg);
+  animation: tm-sweep .75s cubic-bezier(.45, 0, .2, 1) 1s both;
+}
+
+@keyframes tm-sweep {
+  from {
+    transform: translateX(0) skewX(-18deg);
+  }
+
+  to {
+    transform: translateX(1700px) skewX(-18deg);
+  }
+}
+
+/* Ambient: the same blades as faint outlined shapes behind the hero copy.
+   Each blade drifts on its own period, so the form never moves in lockstep. */
+.tm--ambient .tm-blade {
+  fill-opacity: .1;
+  stroke-opacity: .42;
+  stroke-width: 1.4;
+  vector-effect: non-scaling-stroke;
+  animation:
+    tm-assemble 1.5s var(--ease) both,
+    tm-float calc(9s + var(--i) * 2.3s) ease-in-out infinite alternate;
+  animation-delay:
+    calc(var(--i) * .12s + .15s),
+    calc(var(--i) * .7s + 1.8s);
+}
+
+@keyframes tm-float {
+  from {
+    transform: translate(0, 0) rotate(0deg);
+  }
+
+  to {
+    transform:
+      translate(calc(var(--dx) * .028px), calc(var(--dy) * .028px)) rotate(calc(var(--rot) * .1deg));
+  }
+}
+
+/* The hero's large mark: faint enough to sit behind copy, dissolving at its
+   edges, and drifting against the pointer via --px/--py set once on :root by
+   Atmosphere. */
 .hero-mark {
-  opacity: .22;
   z-index: 0;
+  -webkit-mask-image: radial-gradient(closest-side, #000 62%, transparent 100%);
+  mask-image: radial-gradient(closest-side, #000 62%, transparent 100%);
 }
 
 /* Parallax lives on its own wrapper: the mark's idle "breathe" animation owns
@@ -908,8 +1000,9 @@ select:focus-visible {
   transition: transform .9s var(--ease);
 }
 
-/* Its lines wait for the preloader to hand over, then draw in. */
-.js-motion:not(.intro-done) .hero-mark .tpm-arc {
+/* Its blades wait for the preloader to hand over, then assemble. */
+.js-motion:not(.intro-done) .hero-mark .tpm-arc,
+.js-motion:not(.intro-done) .hero-mark .tm-blade {
   animation-play-state: paused;
 }
 
@@ -975,27 +1068,43 @@ select:focus-visible {
   transform: scale(1.1);
 }
 
-.preloader__meta {
-  display: flex;
-  align-items: baseline;
-  gap: 1rem;
+/* The wordmark wipes in left to right once the blades have locked. */
+.preloader__wordmark {
+  width: min(300px, 68vw);
+  height: auto;
+  animation: pre-wordmark .9s var(--ease) both .85s;
 }
 
-.preloader__word {
-  font-size: .68rem;
-  font-weight: 700;
-  letter-spacing: .28em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, .45);
-  animation: reveal-up .8s var(--ease) both .5s;
+@keyframes pre-wordmark {
+  from {
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+    transform: none;
+  }
 }
 
-.preloader__count {
-  font-variant-numeric: tabular-nums;
-  font-size: .95rem;
-  font-weight: 700;
-  color: var(--acc);
-  animation: reveal-up .8s var(--ease) both .6s;
+/* A hairline that fills with the load count instead of a bare number. */
+.preloader__bar {
+  display: block;
+  width: min(300px, 68vw);
+  height: 1px;
+  background: rgba(255, 255, 255, .12);
+  overflow: hidden;
+  animation: reveal-up .8s var(--ease) both .95s;
+}
+
+.preloader__bar i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--path-1), var(--path-2), var(--path-3));
+  transform-origin: left;
+  transform: scaleX(0);
 }
 
 /* ============================================================

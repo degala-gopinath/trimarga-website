@@ -9,6 +9,7 @@ import SplitHeading from '../components/SplitHeading';
 import CountUp from '../components/CountUp';
 import Marquee from '../components/Marquee';
 import ThreePathMark from '../components/ThreePathMark';
+import TrimargaMark from '../components/TrimargaMark';
 import ServicePathGroups from '../components/ServicePathGroups';
 import { PATHS, PATH_ORDER } from '../data/paths';
 
@@ -110,7 +111,7 @@ export default function HomePage() {
             className="hero-mark pointer-events-none absolute right-[-4%] top-1/2 hidden -translate-y-1/2 lg:block"
           >
             <div className="hero-mark__drift">
-              <ThreePathMark size={620} idle strokeWidth={1.5} />
+              <TrimargaMark size={640} variant="ambient" />
             </div>
           </div>
 
